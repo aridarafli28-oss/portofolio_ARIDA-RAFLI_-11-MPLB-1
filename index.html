@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio - Arida Rafli</title>
+    
+    <!-- Google Fonts for Ancient/Brush Aesthetic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Noto+Serif+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        parchment: '#e8dcc4', // Warna kertas perkamen tua
+                        ink: '#111111',       // Tinta hitam pekat
+                        stamp: '#b91c1c',     // Merah cap hanko Jepang
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif JP"', 'serif'],
+                        brush: ['"Kaushan Script"', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS for Ink Effects & Scrollbar -->
+    <style>
+        /* Parchment Background Texture */
+        body {
+            background-color: #e8dcc4;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+            color: #111111;
+        }
+
+        /* Adjust scroll behavior for fixed header */
+        html {
+            scroll-padding-top: 5rem; 
+        }
+
+        /* Ink Box / Rough Borders */
+        .ink-box {
+            background-color: transparent;
+            border: 4px solid #111111;
+            /* Creates a hand-drawn, irregular border look */
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            box-shadow: 5px 5px 0px #111111;
+            transition: all 0.3s ease;
+        }
+
+        .ink-box:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0px #111111;
+        }
+
+        /* Ink Splatter mask for Hero Image */
+        .ink-mask {
+            mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23000' d='M45.7,-76.4C58.9,-69.3,69.1,-55.4,75.4,-40.7C81.8,-26,84.4,-10.5,83.1,4.6C81.9,19.6,76.9,34,68.2,46C59.5,58.1,47,67.7,32.7,73.8C18.3,80,-7.8,82.6,-22.8,77.3C-37.8,72,-51.7,58.8,-63.3,44.2C-74.8,29.5,-84,13.4,-85.7,-3.2C-87.5,-19.9,-81.8,-37.1,-71.4,-51.1C-61,-65,-45.8,-75.7,-30.7,-79.8C-15.6,-83.9,0.5,-81.3,16,-78.3C31.5,-75.4,45.7,-76.4,45.7,-76.4Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23000' d='M45.7,-76.4C58.9,-69.3,69.1,-55.4,75.4,-40.7C81.8,-26,84.4,-10.5,83.1,4.6C81.9,19.6,76.9,34,68.2,46C59.5,58.1,47,67.7,32.7,73.8C18.3,80,-7.8,82.6,-22.8,77.3C-37.8,72,-51.7,58.8,-63.3,44.2C-74.8,29.5,-84,13.4,-85.7,-3.2C-87.5,-19.9,-81.8,-37.1,-71.4,-51.1C-61,-65,-45.8,-75.7,-30.7,-79.8C-15.6,-83.9,0.5,-81.3,16,-78.3C31.5,-75.4,45.7,-76.4,45.7,-76.4Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+            -webkit-mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+        }
+
+        /* Thick Brush Underline */
+        .brush-underline {
+            position: relative;
+            display: inline-block;
+        }
+        .brush-underline::after {
+            content: '';
+            position: absolute;
+            width: 110%;
+            height: 12px;
+            bottom: -2px;
+            left: -5%;
+            background-color: #b91c1c; /* Stamp Red */
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            z-index: -1;
+            opacity: 0.8;
+            transform: rotate(-2deg);
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e8dcc4;
+            border-left: 2px solid #111;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #111;
+            border-radius: 4px;
+        }
+        
+        /* Fade In Animation */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="font-serif antialiased overflow-x-hidden selection:bg-stamp selection:text-white">
+
+    <!-- 1. NAVIGATION BAR -->
+    <nav class="fixed w-full top-0 z-50 transition-all duration-300 backdrop-blur-sm bg-parchment/90 border-b-[3px] border-ink" style="border-radius: 0 0 255px 15px/0 0 15px 255px;">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#home" class="font-brush text-3xl font-bold tracking-wider text-ink hover:text-stamp transition-colors">
+                        A. Rafli
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="text-ink hover:text-stamp font-bold text-lg transition-colors relative group">Home
+                        <span class="absolute -bottom-1 left-0 w-0 h-1 bg-stamp transition-all group-hover:w-full" style="border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;"></span>
+                    </a>
+                    <a href="#about" class="text-ink hover:text-stamp font-bold text-lg transition-colors relative group">About
+                        <span class="absolute -bottom-1 left-0 w-0 h-1 bg-stamp transition-all group-hover:w-full" style="border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;"></span>
+                    </a>
+                    <a href="#skills" class="text-ink hover:text-stamp font-bold text-lg transition-colors relative group">Skills
+                        <span class="absolute -bottom-1 left-0 w-0 h-1 bg-stamp transition-all group-hover:w-full" style="border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;"></span>
+                    </a>
+                    <a href="#projects" class="text-ink hover:text-stamp font-bold text-lg transition-colors relative group">Projects
+                        <span class="absolute -bottom-1 left-0 w-0 h-1 bg-stamp transition-all group-hover:w-full" style="border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;"></span>
+                    </a>
+                    <a href="#contact" class="px-5 py-2 ink-box text-ink font-bold hover:bg-ink hover:text-parchment transition-all">Contact</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-ink hover:text-stamp focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-parchment border-b-[3px] border-ink">
+            <div class="px-2 pt-2 pb-5 space-y-1 sm:px-3 text-center flex flex-col">
+                <a href="#home" class="block px-3 py-2 text-ink font-bold hover:text-stamp hover:bg-ink/5 rounded mobile-link">Home</a>
+                <a href="#about" class="block px-3 py-2 text-ink font-bold hover:text-stamp hover:bg-ink/5 rounded mobile-link">About</a>
+                <a href="#skills" class="block px-3 py-2 text-ink font-bold hover:text-stamp hover:bg-ink/5 rounded mobile-link">Skills</a>
+                <a href="#projects" class="block px-3 py-2 text-ink font-bold hover:text-stamp hover:bg-ink/5 rounded mobile-link">Projects</a>
+                <a href="#contact" class="block px-3 py-2 text-stamp font-bold hover:bg-ink/5 rounded mobile-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="pt-20">
+        
+        <!-- 2. HERO SECTION -->
+        <section id="home" class="min-h-[90vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center gap-12">
+                <!-- Text Content -->
+                <div class="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left fade-in-up">
+                    <h2 class="text-xl md:text-2xl font-bold mb-2 text-ink/80">Sang Pembelajar,</h2>
+                    <h1 class="text-5xl md:text-7xl font-brush font-bold mb-6 text-ink leading-tight">
+                        ARIDA <br> <span class="brush-underline text-ink">RAFLI</span>
+                    </h1>
+                    <div class="ink-box p-6 mt-4 max-w-lg bg-parchment/50 backdrop-blur-sm relative">
+                        <!-- Decorative quote mark -->
+                        <i class="fa-solid fa-quote-left absolute -top-4 -left-3 text-3xl text-stamp bg-parchment px-1"></i>
+                        <p class="text-lg md:text-xl leading-relaxed text-ink font-medium">
+                            "Hallo, selamat datang di website portofolio saya, website ini dibuat untuk saya menaruh seluruh project yang saya buat."
+                        </p>
+                    </div>
+                    <div class="mt-10 flex gap-4">
+                        <a href="#projects" class="ink-box px-8 py-3 font-bold text-lg bg-ink text-parchment hover:bg-transparent hover:text-ink transition-all">Lihat Project</a>
+                        <a href="#contact" class="ink-box px-8 py-3 font-bold text-lg hover:bg-stamp hover:border-stamp hover:text-parchment transition-all">Hubungi Saya</a>
+                    </div>
+                </div>
+                <!-- Image/Avatar -->
+                <div class="w-full md:w-1/2 flex justify-center fade-in-up" style="transition-delay: 200ms;">
+                    <div class="relative group">
+                        <!-- Red decorative circle behind -->
+                        <div class="absolute inset-0 bg-stamp rounded-full transform -translate-x-4 translate-y-4 opacity-80 ink-mask group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-500"></div>
+                        <!-- Placeholder Image (Using placehold.co, stylized) -->
+                        <img src="https://placehold.co/500x500/111111/e8dcc4?text=Arida+Rafli" alt="Foto Arida Rafli" class="relative z-10 w-64 h-64 md:w-96 md:h-96 object-cover ink-mask grayscale hover:grayscale-0 transition-all duration-500">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. ABOUT SECTION -->
+        <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 border-t-2 border-dashed border-ink/30 relative">
+            <!-- Decorative Element -->
+            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-stamp opacity-20 text-6xl">
+                <i class="fa-brands fa-d-and-d"></i>
+            </div>
+            
+            <div class="max-w-4xl mx-auto text-center fade-in-up">
+                <h2 class="text-4xl md:text-5xl font-brush font-bold mb-12 text-ink">
+                    <span class="brush-underline">Tentang Saya</span>
+                </h2>
+                
+                <div class="ink-box p-8 md:p-12 text-left bg-parchment relative">
+                    <!-- Red Stamp (Hanko) Decorative -->
+                    <div class="absolute top-4 right-4 border-2 border-stamp text-stamp font-brush text-sm p-1 transform rotate-12 opacity-80">
+                        AR
+                    </div>
+                    <p class="text-lg md:text-xl leading-relaxed mb-6 font-medium">
+                        Salam Kenal! Saya adalah seorang siswa di <strong class="text-xl text-stamp">SMK CYBER MEDIA</strong>.
+                    </p>
+                    <p class="text-lg md:text-xl leading-relaxed font-medium">
+                        Saat ini, saya sedang menempuh pendidikan di jurusan <strong class="border-b-2 border-ink pb-1">MPLB (Manajemen Perkantoran Dan Layanan Bisnis)</strong>. Saya memiliki minat yang besar dalam administrasi, pengelolaan informasi, serta memastikan segala proses layanan bisnis berjalan dengan rapi dan terstruktur layaknya strategi seorang prajurit.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. SKILLS SECTION -->
+        <section id="skills" class="py-20 px-4 sm:px-6 lg:px-8 bg-ink text-parchment" style="border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;">
+            <div class="max-w-6xl mx-auto fade-in-up">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-brush font-bold mb-4">
+                        <span class="brush-underline" style="background-color: #parchment;">Keahlian Senjata</span>
+                    </h2>
+                    <p class="text-parchment/70 font-medium">Alat dan keterampilan yang saya asah di medan tugas.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Skill 1 -->
+                    <div class="border-[3px] border-parchment p-8 flex flex-col items-center justify-center text-center group hover:bg-parchment hover:text-ink transition-all duration-300" style="border-radius: 15px 225px 15px 255px/255px 15px 225px 15px;">
+                        <i class="fa-solid fa-file-word text-5xl mb-4 group-hover:text-blue-800 transition-colors"></i>
+                        <h3 class="text-2xl font-bold font-brush">Word</h3>
+                        <p class="mt-2 text-sm opacity-80">Pembuatan dokumen & surat menyurat profesional.</p>
+                    </div>
+                    
+                    <!-- Skill 2 -->
+                    <div class="border-[3px] border-parchment p-8 flex flex-col items-center justify-center text-center group hover:bg-parchment hover:text-ink transition-all duration-300" style="border-radius: 225px 15px 255px 15px/15px 255px 15px 225px;">
+                        <i class="fa-solid fa-file-excel text-5xl mb-4 group-hover:text-green-700 transition-colors"></i>
+                        <h3 class="text-2xl font-bold font-brush">Excel</h3>
+                        <p class="mt-2 text-sm opacity-80">Pengelolaan data, tabel, dan administrasi angka.</p>
+                    </div>
+
+                    <!-- Skill 3 -->
+                    <div class="border-[3px] border-parchment p-8 flex flex-col items-center justify-center text-center group hover:bg-parchment hover:text-ink transition-all duration-300" style="border-radius: 15px 255px 15px 225px/225px 15px 255px 15px;">
+                        <i class="fa-solid fa-file-powerpoint text-5xl mb-4 group-hover:text-orange-600 transition-colors"></i>
+                        <h3 class="text-2xl font-bold font-brush">PowerPoint</h3>
+                        <p class="mt-2 text-sm opacity-80">Desain presentasi visual untuk komunikasi bisnis.</p>
+                    </div>
+
+                    <!-- Skill 4 -->
+                    <div class="border-[3px] border-parchment p-8 flex flex-col items-center justify-center text-center group hover:bg-parchment hover:text-ink transition-all duration-300" style="border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;">
+                        <i class="fa-solid fa-comments text-5xl mb-4 group-hover:text-stamp transition-colors"></i>
+                        <h3 class="text-2xl font-bold font-brush">Komunikasi</h3>
+                        <p class="mt-2 text-sm font-bold">(ID & EN)</p>
+                        <p class="mt-1 text-sm opacity-80">Komunikasi verbal dan tertulis yang efektif.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. PROJECTS SECTION -->
+        <section id="projects" class="py-24 px-4 sm:px-6 lg:px-8 relative">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16 fade-in-up">
+                    <h2 class="text-4xl md:text-5xl font-brush font-bold text-ink mb-4">
+                        <span class="brush-underline">Gulungan Karya (Projects)</span>
+                    </h2>
+                    <p class="text-ink/70 font-medium mt-4">Catatan tugas dan proyek yang telah saya selesaikan.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <!-- Project Card 1 -->
+                    <div class="ink-box bg-parchment flex flex-col overflow-hidden fade-in-up">
+                        <div class="h-48 border-b-[3px] border-ink bg-ink/10 flex items-center justify-center overflow-hidden">
+                             <!-- Using placehold.co for dummy projects -->
+                            <img src="https://placehold.co/600x400/222222/e8dcc4?text=Arsip+Data" alt="Project 1" class="w-full h-full object-cover mix-blend-multiply hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h3 class="text-xl font-bold font-brush mb-2">Manajemen Arsip Digital</h3>
+                            <p class="text-sm font-medium mb-4 flex-1">Mengelola dan mengkategorikan data dokumen kantor menggunakan sistem pengarsipan digital.</p>
+                            <span class="inline-block px-3 py-1 border-2 border-ink text-xs font-bold w-max" style="border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;">Microsoft Excel</span>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 2 -->
+                    <div class="ink-box bg-parchment flex flex-col overflow-hidden fade-in-up" style="transition-delay: 150ms;">
+                        <div class="h-48 border-b-[3px] border-ink bg-ink/10 flex items-center justify-center overflow-hidden">
+                            <img src="https://placehold.co/600x400/222222/e8dcc4?text=Presentasi+Bisnis" alt="Project 2" class="w-full h-full object-cover mix-blend-multiply hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h3 class="text-xl font-bold font-brush mb-2">Presentasi Profil Bisnis</h3>
+                            <p class="text-sm font-medium mb-4 flex-1">Membuat materi presentasi untuk layanan bisnis perusahaan dengan visual menarik dan komunikasi yang tepat.</p>
+                            <span class="inline-block px-3 py-1 border-2 border-ink text-xs font-bold w-max" style="border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;">PowerPoint</span>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 3 -->
+                    <div class="ink-box bg-parchment flex flex-col overflow-hidden fade-in-up" style="transition-delay: 300ms;">
+                        <div
